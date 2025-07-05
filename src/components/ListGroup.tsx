@@ -1,31 +1,38 @@
+import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { MouseEvent } from "react";
+// {items: [...], heading: string, function(string)} is the props passed to the component
+interface ListGroupProps {
+  items: string[];
+  heading: string;
+  // function to handle Selected Items, takes Strings and returns nothing
+  onSelectedItem: (item: string) => void; // wie onClick
+}
 
 // Fragments are used to return more than one Element, like here h1 and ul
 
-function ListGroup() {
-  let items = [
-    //for List Elements, normal Array
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Philadelphia",
-  ];
+function ListGroup({ items, heading, onSelectedItem }: ListGroupProps) {
 
-
-  //event handler
-  const handle = (event : MouseEvent) => {
-     console.log("Hello")
-    };
+  //Hook
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
     <Fragment>
-      <h1>List</h1>
+      <h1 className="p-4 m-2">{heading}</h1>
       {items.length == 0 && <p>No item found</p>}
-      <ul className="list-group">
+      <ul className="list-group bg-dark p-4 m-5 rounded">
         {items.map((item, index) => (
-          <li className="list-group-item" key={index} onClick={handle}>
+          <li
+            className={
+              index === selectedIndex
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={index}
+            onClick={() => {
+              setSelectedIndex(index);
+              onSelectedItem(item);
+            }}
+          >
             {item}
           </li>
         ))}

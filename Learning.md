@@ -151,3 +151,23 @@ Like this:
 ```tsx
 import { MouseEvent } from "react";
 ```
+
+## Hook
+
+Use State Hook to store data in the component. This hook is used to store data in the component or to update the data in the component. It is used to store data in the component that is not passed as a prop.
+
+```tsx
+const [selectedIndex, setSelectedIndex] = useState(-1);
+```
+
+This is how you can use the state hook to store data in the component. the first variable is the variable that you want to change, and the second variable is the methode that changes it.
+
+## Props vs State
+
+| PROPS | STATE |
+| --- | --- |
+|  Input passed to a component | Data managed by a component |
+| Immutable | Mutable |
+| Passed from parent to child | Managed by the component itself |
+| Similar to function args | Similar to local variables |
+| Cause a re-render when changed | Cause a re-render when changed |
