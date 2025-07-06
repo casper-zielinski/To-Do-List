@@ -113,6 +113,10 @@ Also using this expression:
 
 only if the left statement is true, the right statement is returned, otherwise false, so nothing gets rendered.
 
+| if true | Parameted to do this | do this |
+| --- | --- | --- |
+| `items.length == 0` | ``&&`` | ``\<p>No item found</p>`` |
+
 ## Using Events
 
 in the onClick() section you can use a function to specify what should happen when the button is clicked. This function is called when the button is clicked. Example:
@@ -171,3 +175,91 @@ This is how you can use the state hook to store data in the component. the first
 | Passed from parent to child | Managed by the component itself |
 | Similar to function args | Similar to local variables |
 | Cause a re-render when changed | Cause a re-render when changed |
+
+## Chanigng externally
+
+If you want to change the state of a component externally, declare a Interface/Prompt like this in the child component:
+
+```tsx
+interface Props {
+  displayClass?: string; // Optional property to control visibility --> achieved through ?
+  handleCloseAlert: () => void; // click handler
+}
+```
+
+with this, when you call the child component, you can pass the function like this:
+
+```tsx
+
+function App() {
+
+const [displayerClass, setDisplayerClass] = useState('d-none');
+
+const handleButtonClick = () => {
+    setDisplayerClass('d-flex');
+  };
+
+const handleCloseAlert = () => {
+    setDisplayerClass('d-none');
+  };
+
+  return (
+    <div>
+      <h1 className="p-4 m-2">Hello World</h1>
+      <ClosingAlert displayClass={displayerClass} handleCloseAlert={handleCloseAlert} /> 
+      <Button onClick={handleButtonClick}/>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+Here we see a function `handleCloseAlert` that is passed to the child component. This function is used to change the state of the child component (to display: none). This is a hook to change the state of the child component from the parent component, a hook function.
+
+## Important Operator
+
+- ``&&`` to check if a condition is true before executing a code block. It is a logical AND operator. It will only execute the code block if the condition is true, otherwise , it will skip it.
+
+- ``||`` to check if a condition is false before executing a code block. It is a logical OR operator. It will only execute the code block if the condition is false, otherwise, it will skip it.
+
+- ``??`` to check if a variable is null or undefined before executing a code block. It is a nullish coalescing operator. It will only execute the code block if the variable is null or undefined, otherwise, it will skip it.
+
+- `?` a if statement that is shortend, it is used to check if a condition is true or false before executing a code block. The structure looks like this: `condition ? code block if true : code block if false`. It is a shorthand for if-else statement.
+
+## Objects
+
+When you want to pass an object variable to a variable, or many variables to a variable, you can use the {} operator. This is called object destructuring. 
+
+Example:
+
+```js
+const person = {
+  name: 'John Doe',
+  age: 30,
+  isMarried: true,
+};
+
+const { name, age, isMarried } = person;
+```
+
+```js
+const person = {
+  name: 'John Doe',
+  age: 30,
+  isMarried: true,
+};
+
+const person2 = {...person, name: 'Jack Doe'};
+```
+
+In the first example, we are destructuring the object `person` and assigning its properties to the variables, `name`, `age`, and `isMarried`. In the second example, we are creating a new object `person2` that is a copy of `person` but with a different `name` property. This is called object spread operator. The `...` operator is used to spread the properties of an object into a new object.
+
+The `...` operator als works for arrays. Here is an example:
+
+```js
+const name = ["Albert", "Beata", "Nelly"];
+const name2 = [...name, "Jack"]; //The array now looks like: ["Albert", "Beata", "Nelly", "Jack"]
+```
+

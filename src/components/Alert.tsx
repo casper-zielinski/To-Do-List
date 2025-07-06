@@ -1,7 +1,12 @@
+import { ReactNode } from "react";
 
-const Alert = () => {
+interface Props{
+      children: ReactNode; //using HTML elements or JSX elements in the component, so we use ReactNode. For example using <span> or smth different
+}
+
+const Alert = ({children}: Props) => {
   return (
-    <div>Alert</div>
+    <div>{children}</div>
   )
 }
 

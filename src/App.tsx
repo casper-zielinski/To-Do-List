@@ -1,22 +1,16 @@
-import ListGroup from "./components/ListGroup";
+import { useState } from "react";
+import Button from "./components/Button";
+import ClosingAlert from "./components/ClosingAlert";
 
 function App() {
-  let items = [
-    //for List Elements, normal Array
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Philadelphia",
-  ];
 
-  const handle = (item: string) => {
-    console.log(item);
-    };
+const [displayerClass, setDisplayerClass] = useState('d-none');
 
   return (
     <div>
-      <ListGroup items={items} heading="Cities" onSelectedItem={handle}/>
+      <h1 className="p-4 m-2">Hello World</h1>
+      <ClosingAlert displayClass={displayerClass} handleCloseAlert={() => setDisplayerClass('d-none') } />
+      <Button onClick={() => setDisplayerClass('d-flex')}/>
     </div>
   );
 }
