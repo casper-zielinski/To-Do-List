@@ -262,3 +262,55 @@ The `...` operator als works for arrays. Here is an example:
 const name = ["Albert", "Beata", "Nelly"];
 const name2 = [...name, "Jack"]; //The array now looks like: ["Albert", "Beata", "Nelly", "Jack"]
 ```
+
+## Importing SVG files as React Components
+
+1. Install plugin
+
+```bash
+npm install vite-plugin-svgr --save-dev
+```
+
+2. Add plugin to vite.config.js
+
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
+
+export default defineConfig({
+  plugins: [react(), svgr()],
+});
+```
+
+Important: Restart Server after adding the plugin. If you are using a IDE like Visual Studio Code, you can restart the server by clicking on the "Run Code" button in the top right corner of the screen.
+
+3. Create in the src folder a file called svg.d.ts with the following content:
+
+```ts
+declare module '*.svg?react' {
+  import * as React from 'react';
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+4. Now you can import your SVG files as React components in your React components. For example:
+
+```tsx
+import TrashIcon from '../../../trash-bin.svg?react';
+
+function Trash() {
+  return <TrashIcon width={30} height={30} />;
+}
+
+export default Trash;
+```
+
+5. Things to consider
+
+- Make sure, that the SVG file is in the same directory as the component that is importing it.
+
+- Make sure that the SVG file doesn't include any XML namespace declarations. If it does, you can remove them by using a tool like svgo, which optimizes SVG files by cleaning up unnecessary metadata, attributes, and XML declarations.
+
+- You can install svgo globally via npm install -g svgo and run it with svgo your-file.svg.

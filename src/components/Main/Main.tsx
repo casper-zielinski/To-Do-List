@@ -5,10 +5,29 @@ import List from "./List/List";
 function Main() {
   let [elements, setElements] = useState<string[]>([]);
 
+  const addingNewTask = () => {
+    setElements([...elements, "New Task"]);
+  };
+
   return (
     <div className="Main p-3 bg-light border border-black m-2 rounded">
-      <AddNew onClickAdd={() => setElements([...elements, "New Element"])}/>
-      <List List={elements}/>
+      <AddNew
+        onClickAdd={() => {
+          addingNewTask();
+          console.log("New Task added");
+        }}
+      />
+      <List
+        List={elements}
+        children={
+          <AddNew
+            onClickAdd={() => {
+              addingNewTask();
+              console.log("New Task added");
+            }}
+          />
+        }
+      />
     </div>
   );
 }

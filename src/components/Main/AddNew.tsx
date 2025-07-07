@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 
 interface AddNewProps {
@@ -6,14 +7,13 @@ interface AddNewProps {
 
 function AddNew({ onClickAdd }: AddNewProps) {
 
-
   return (
     <>
       <button
         type="button"
-        className="btn btn-primary m-2 p-2 d-flex fs-1"
+        className="btn btn-primary m-4 p-2 d-flex fs-1"
         onClick={() => {
-          onClickAdd("New Element");
+          onClickAdd("New Task");
         }}
       >
         +
