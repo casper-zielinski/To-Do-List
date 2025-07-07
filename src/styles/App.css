@@ -1,0 +1,31 @@
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #ecf0f1;
+  --accent-color: #3498db;
+  --font-family: 'Inter', sans-serif;
+}
+
+.App {
+  background-color: var(--secondary-color);
+}
+
+.text-primary-light {
+  color: var(--secondary-color);
+}
+
+.bg-primary-dark {
+  background-color: var(--primary-color);
+}
+
+.bg-primary-light {
+  background-color: var(--accent-color);
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-roboto { font-family: 'Roboto', sans-serif; }
+
+.text-primary-dark { color: #2c3e50; }
+

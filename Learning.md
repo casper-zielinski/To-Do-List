@@ -230,7 +230,7 @@ Here we see a function `handleCloseAlert` that is passed to the child component.
 
 ## Objects
 
-When you want to pass an object variable to a variable, or many variables to a variable, you can use the {} operator. This is called object destructuring. 
+When you want to pass an object variable to a variable, or many variables to a variable, you can use the {} operator. This is called object destructuring.
 
 Example:
 
@@ -262,4 +262,3 @@ The `...` operator als works for arrays. Here is an example:
 const name = ["Albert", "Beata", "Nelly"];
 const name2 = [...name, "Jack"]; //The array now looks like: ["Albert", "Beata", "Nelly", "Jack"]
 ```
-
