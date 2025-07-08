@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 
-
 interface AddNewProps {
   onClickAdd: (newElement: string) => void;
 }
 
 function AddNew({ onClickAdd }: AddNewProps) {
-
   return (
     <>
       <button
