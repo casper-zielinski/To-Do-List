@@ -8,6 +8,13 @@ function ToDoList() {
     setNewTask(event.target.value);
   }
 
+  function handleInputChangeTask(event: React.ChangeEvent<HTMLInputElement>, index:number)
+  {
+      const updatedText = [...tasks];
+      updatedText[index] = event.target.value;
+      setTasks(updatedText);
+  }
+
   function addTask() {
     newTask && setTasks([...tasks, newTask]);
   }
@@ -40,7 +47,7 @@ function ToDoList() {
         <div className="container p-4 border border-dark rounded bg-light shadow justify-content-center d-flex">
           <input
             type="text"
-            className="m-2"
+            className="m-4 w-50"
             placeholder="Enter a task"
             value={newTask}
             onChange={handleInputChange}
@@ -55,7 +62,7 @@ function ToDoList() {
               className="border p-4 m-2 border-dark rounded shadow bg-light"
               key={index}
             >
-              <span className="bg-dark text-white p-2 m-2 rounded">{task}</span>
+              <input type="text" value={tasks[index]} onChange={(event) => handleInputChangeTask(event, index)} className="bg-dark text-white p-2 m-2 rounded w-50" />
               <button
                 className="btn btn-outline-danger p-2 m-1"
                 onClick={() => deleteTask(index)}
