@@ -1,25 +1,25 @@
 import { ReactNode, useEffect, useState } from "react";
 import Trash from "./Trash";
+import { ListItem } from "../Main";
 
 interface ListProps {
-  List: string[];
-  onDeleteTask: (index: number) => void;
-  onAddTask?: () => void; // Optional prop for adding tasks
-  addedTask: ReactNode;
+  List: ListItem[];
+  deleteTask: (index: number) => void;
+  changer: ReactNode;
 }
 
-function List({ List, onDeleteTask, onAddTask, addedTask }: ListProps) {
-  let isCheckedArray: boolean[] = [];
+function List({ List, deleteTask, changer }: ListProps) {
 
-  const [isCheckedTask, setIsCheckedTask] = useState<boolean[]>(
-    isCheckedArray.map(() => false)
-  );
+  const [isCheckedTask, setIsCheckedTask] = useState<boolean[]>([]);
 
   useEffect(() => {
-    console.log("List component mounted or updated");
-    console.log("Current List:", List);
-    setIsCheckedTask(new Array(List.length).fill(false));
-  }, [List]); // ← Change back to [List]
+    setIsCheckedTask((prev) => {
+      let newPrev = prev;
+      newPrev.push(false);
+      return newPrev;
+    });
+    console.log(isCheckedTask);
+  }, [changer]);
 
   return (
     <>
@@ -31,13 +31,30 @@ function List({ List, onDeleteTask, onAddTask, addedTask }: ListProps) {
           >
             <input
               type="text"
-              className="form-control col-4"
+              className={
+                isCheckedTask[index]
+                  ? "form-control col-4 text-decoration-line-through fw-bolder text-muted"
+                  : "form-control col-4 fw-bolder"
+              }
               placeholder={`Task ${index + 1}`}
+              onChange={(e) => {
+                {
+                  console.log(
+                    `Input changed for item ${index}:`,
+                    e.target.value
+                  );
+                }
+              }}
             />
             <input
-              className="form-check-input me-1"
+              className={
+                isCheckedTask[index]
+                  ? "form-check-input col-1 bg-success p-3 mt-2"
+                  : "form-check-input col-1 bg-dark p-3 mt-2"
+              }
               type="checkbox"
               value=""
+              checked={isCheckedTask[index]}
               id="firstCheckbox"
               aria-label="Checkbox for following text input"
               onChange={() => {
@@ -55,16 +72,9 @@ function List({ List, onDeleteTask, onAddTask, addedTask }: ListProps) {
             />
             <Trash
               onClickDelete={() => {
-                console.log("=== DELETE DEBUG ===");
-                console.log("Clicked index:", index);
-                console.log("isCheckedTask array:", isCheckedTask);
-                console.log("isCheckedTask[index]:", isCheckedTask[index]);
-                console.log("Current List:", List);
-                console.log("List length:", List.length);
-
                 if (isCheckedTask[index]) {
                   console.log("About to call onDeleteTask with index:", index);
-                  onDeleteTask(index);
+                  deleteTask(index);
                 } else {
                   console.log("Task not checked, deletion skipped");
                 }

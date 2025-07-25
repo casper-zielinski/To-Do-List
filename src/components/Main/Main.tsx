@@ -1,53 +1,34 @@
 import { useState } from "react";
 import AddNew from "./AddNew";
-import List from "./List/List";
+import ListComponent from "./List/List";
+import "../../styles/App.css";
+
+export interface ListItem {
+  item: string;
+  isChecked: boolean;
+  due: string;
+}
 
 function Main() {
-  let [elements, setElements] = useState<string[]>([]);
-  const [taskCounter, setTaskCounter] = useState(0);
+  const [List, setList] = useState<ListItem[]>([]);
 
-  // Function to add a new task
-  // This function updates the state by adding a new task to the list of elements
-  const addingNewTask = () => {
-    setElements([...elements, `Task ${taskCounter + 1}`]);
-    setTaskCounter(taskCounter + 1);
-  };
+  function addNewItem(item: string) {
+    const newListItem: ListItem = {
+      item: item,
+      isChecked: false,
+      due: new Date().toLocaleDateString(),
+    };
+    setList((prev: ListItem[]) => [...prev, newListItem]);
+  }
 
-  // Function to handle the deletion of a task
-  // This function takes the index of the task to be deleted, the index is passed from the List component, so it knows which task to delete
-  const handleDeleteTask = (index: number) => {
-    console.log("=== MAIN DELETE DEBUG ===");
-    console.log("Received index to delete:", index);
-    console.log("Current elements before delete:", elements);
-    console.log("Element at index", index, ":", elements[index]);
-
-    const newElements = elements.filter((_, i) => i !== index);
-    console.log("New elements after filter:", newElements);
-
-    setElements(newElements);
-  };
+  function deleteSpecificItem(index: number) {
+    setList((prev: ListItem[]) => prev.filter((_, i) => i !== index));
+  }
 
   return (
     <div className="Main p-3 bg-light border border-black m-2 rounded">
-      <AddNew
-        onClickAdd={() => {
-          addingNewTask();
-          console.log("New Task added");
-        }}
-      />
-      <List
-        List={elements}
-        onDeleteTask={handleDeleteTask}
-        onAddTask={addingNewTask}
-        addedTask={
-          <AddNew
-            onClickAdd={() => {
-              addingNewTask();
-              console.log("New Task added");
-            }}
-          />
-        }
-      />
+      <AddNew onClickAdd={addNewItem} />
+      <ListComponent List={List} deleteTask={deleteSpecificItem} changer={<AddNew onClickAdd={addNewItem} />}/>
     </div>
   );
 }

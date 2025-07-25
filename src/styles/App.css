@@ -3,10 +3,44 @@
   --secondary-color: #ecf0f1;
   --accent-color: #3498db;
   --font-family: 'Inter', sans-serif;
+  background-color: var(--secondary-color);
+  overflow-x: hidden;
 }
 
 .App {
   background-color: var(--secondary-color);
+}
+
+.my-navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; 
+  transition: all 0.3s ease-in-out;
+}
+
+.my-navbar:hover {
+  transform: scaleY(1.009);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.575) !important;
+}
+
+.heading{
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.heading:hover {
+  transform: scale(1.009);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.575);
+}
+
+.Main {
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.Main:hover {
+  transform: scale(1.009);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.575);
 }
 
 .text-primary-light {
@@ -29,3 +63,12 @@
 
 .text-primary-dark { color: #2c3e50; }
 
+@media (min-width: 1200px) {
+  .Main:hover {
+  transform: scale(1.004);
+  }
+
+  .heading:hover {
+    transform: scale(1.004);
+  }
+}
