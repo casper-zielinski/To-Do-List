@@ -314,3 +314,41 @@ export default Trash;
 - Make sure that the SVG file doesn't include any XML namespace declarations. If it does, you can remove them by using a tool like svgo, which optimizes SVG files by cleaning up unnecessary metadata, attributes, and XML declarations.
 
 - You can install svgo globally via npm install -g svgo and run it with svgo your-file.svg.
+
+## Switching Arrays
+
+here is how to switch arrays (also in React)
+
+1. Make a new const that is the old array: `const updatedTask = [...tasks];`
+2. Then use the spread operator to create a new array with the updated task
+
+```ts
+  function moveTaskDown(index: number) {
+      if (index < tasks.length - 1)
+      {
+          const updatedTask = [...tasks];
+          [updatedTask[index],updatedTask[index+1]] = [task[index+1],updatedTask[index]]
+          setTasks(updatedTask); //update the state, this is a state Hook
+      }
+      else{
+            alert("No!")
+      }
+  }
+```
+
+or moving elements up:
+
+````ts
+function moveTaskUp(index: number) {
+    if (index > 0)
+    {
+      const updatedTask = [...tasks];
+      [updatedTask[index],updatedTask[index-1]] = [tasks[index-1],tasks[index]]
+      setTasks(updatedTask);
+    }
+    else{
+      alert("No!")
+    }
+  }
+```
+
