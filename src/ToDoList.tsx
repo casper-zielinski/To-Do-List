@@ -1,15 +1,24 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Adder from "./Adder";
+import { v4 as uuidv4 } from "uuid";
 
 function ToDoList() {
-  const [tasks, setTasks] = useState<string[]>([]);
-  const [newTask, setNewTask] = useState<string>("");
+  type Task = {
+    id: string;
+    text: string;
+  };
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState<Task>({ id: "", text: "" });
   const [isChecked, setIsChecked] = useState<boolean[]>([]);
-  const [allCounter, setAllCounter] = useState(0);
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setNewTask(event.target.value);
+    setNewTask({
+      id: uuidv4(),
+      text: event.target.value,
+    });
   }
 
   function handleInputChangeTask(
@@ -17,14 +26,13 @@ function ToDoList() {
     index: number
   ) {
     const updatedText = [...tasks];
-    updatedText[index] = event.target.value;
+    updatedText[index] = { ...updatedText[index], text: event.target.value };
     setTasks(updatedText);
   }
 
   function addTask() {
     newTask && setTasks((prev) => [...prev, newTask]);
     setIsChecked((prev) => [...prev, false]);
-    setAllCounter((prev) => prev + 1);
   }
 
   function deleteTask(index: number) {
@@ -65,76 +73,21 @@ function ToDoList() {
   return (
     <>
       <div className="d-flex flex-column align-items-center justify-content-center">
-        <div className="p-4 justify-content-center d-flex">
-          <button
-            type="button"
-            className="btn btn-primary btn-lg"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Add New Task
-          </button>
-          <div
-            className="modal fade"
-            id="exampleModal"
-            tabIndex={-1}
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel">
-                    Adding New Task
-                  </h1>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="modal-body d-flex justify-content-center">
-                  <input
-                    type="text"
-                    className="m-4 w-100"
-                    placeholder="Enter a task"
-                    value={newTask}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={addTask}
-                    data-bs-dismiss="modal"
-                    onKeyUp={(event) => event.key === "Enter" && addTask()}
-                  >
-                    Add Task
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Adder
+          handleInputChange={handleInputChange}
+          addTask={addTask}
+          newTask={newTask?.text}
+        />
         <div className="container-fluid">
           <ol className="text-white list-group list-group-numbered">
             {tasks.map((task, index) => (
               <li
                 className="border p-4 my-2 border-dark rounded shadow bg-light row mx-1"
-                key={index + task + allCounter}
+                key={task.id}
               >
                 <input
                   type="text"
-                  value={tasks[index]}
+                  value={tasks[index].text}
                   onChange={(event) => handleInputChangeTask(event, index)}
                   className={
                     isChecked[index]
@@ -161,7 +114,7 @@ function ToDoList() {
                   {"DOWN"}
                 </button>
                 <input
-                  className="form-check-input p-3 ms-2 my-sm-4"
+                  className="form-check-input p-3 ms-2 my-sm-4 border border-black border-2"
                   type="checkbox"
                   value=""
                   id="checkDefault"
