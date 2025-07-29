@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -6,6 +6,7 @@ function ToDoList() {
   const [tasks, setTasks] = useState<string[]>([]);
   const [newTask, setNewTask] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean[]>([]);
+  const [allCounter, setAllCounter] = useState(0);
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewTask(event.target.value);
@@ -23,6 +24,7 @@ function ToDoList() {
   function addTask() {
     newTask && setTasks((prev) => [...prev, newTask]);
     setIsChecked((prev) => [...prev, false]);
+    setAllCounter((prev) => prev + 1);
   }
 
   function deleteTask(index: number) {
@@ -128,7 +130,7 @@ function ToDoList() {
             {tasks.map((task, index) => (
               <li
                 className="border p-4 my-2 border-dark rounded shadow bg-light row mx-1"
-                key={index + task }
+                key={index + task + allCounter}
               >
                 <input
                   type="text"
@@ -136,30 +138,30 @@ function ToDoList() {
                   onChange={(event) => handleInputChangeTask(event, index)}
                   className={
                     isChecked[index]
-                      ? "text-decoration-line-through text-secondary"
-                      : "text-dark"
+                      ? "text-decoration-line-through text-secondary col-sm-7 col-xl-5 me-sm-3 me-xl-1 rounded"
+                      : "text-dark col-sm-7 col-xl-5 me-sm-3 me-xl-1 rounded"
                   }
                 />
                 <button
-                  className="btn btn-outline-danger btn-lg p-2 my-2"
+                  className="btn btn-outline-danger btn-lg p-2 my-2 col-sm-4 col-xl-3"
                   onClick={() => deleteTask(index)}
                 >
                   {"Delete"}
                 </button>
                 <button
-                  className="btn btn-outline-primary p-2 my-1"
+                  className="btn btn-outline-primary p-2 my-1 col-sm-5 me-sm-2 my-sm-3 col-xl-1 mx-xl-2"
                   onClick={() => moveTaskUp(index)}
                 >
                   {"UP"}
                 </button>
                 <button
-                  className="btn btn-outline-primary p-2 my-1"
+                  className="btn btn-outline-primary p-2 my-1 col-sm-5 ms-sm-2 my-sm-3 col-xl-1 mx-xl-2"
                   onClick={() => moveTaskDown(index)}
                 >
                   {"DOWN"}
                 </button>
                 <input
-                  className="form-check-input"
+                  className="form-check-input p-3 ms-2 my-sm-4"
                   type="checkbox"
                   value=""
                   id="checkDefault"
